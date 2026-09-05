@@ -1,5 +1,7 @@
+mod tokenizer;
+
 use iced::widget::{Button, text, Text, Grid, Column, Container, Row, column, container, row};
-use iced::{Alignment, Fill, Element, Theme, Renderer, Length, FillPortion, Settings, window};
+use iced::{Alignment, Fill, Element, Theme, Renderer, Length, FillPortion, Settings, Size, window};
 
 const BUTTON_SIZE: u32 = 50;
 
@@ -8,6 +10,9 @@ const BUTTON_SIZE: u32 = 50;
 struct TextStack{
     value: String,
 }
+
+
+
 
 #[derive(Default)]
 struct Calculator{
@@ -24,12 +29,18 @@ enum Message {
 
 impl Calculator{
 
+    fn new() -> Self{
+        Self{
+            value: "".to_string(),
+        }
+    }
+
     fn update (&mut self, message: Message){
     match message{
         Message::Input(ValueIn)=>{
             self.value.push_str(&ValueIn);
         },
-        Message::Evaluate=>todo!(),
+        Message::Evaluate=>self.evaluate(),
         }
     }
 
@@ -230,19 +241,25 @@ impl Calculator{
 
     }
 
+    fn evaluate(&self){
+
+        let input = self.value.clone();
+        tokenizer::tokenize(input);
+
+
+    }
+
+
+
+
+
 
 }
 
 
-
-
-
-
-
-
-
 pub fn main() -> iced::Result{
    
-    iced::run(Calculator::update, Calculator::view)
-   
+    iced::application(Calculator::new, Calculator::update, Calculator::view)
+        .window_size(iced::Size::new(400.0, 500.0))
+        .run()
 }
