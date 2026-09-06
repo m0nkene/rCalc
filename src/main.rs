@@ -26,6 +26,7 @@ struct Calculator{
 enum Message {
     Input(String),
     Evaluate,
+    Clear,
 }
 
 
@@ -38,15 +39,18 @@ impl Calculator{
     }
 
     fn update (&mut self, message: Message){
-    match message{
-        Message::Input(ValueIn)=>{
-            self.value.push_str(&ValueIn);
-        },
-        Message::Evaluate=>{
-            let out = self.evaluate();
-            self.value= (out.to_string());
-        },
-    }
+        match message{
+            Message::Input(ValueIn)=>{
+                self.value.push_str(&ValueIn);
+            },
+            Message::Evaluate=>{
+                let out = self.evaluate();
+                self.value= (out.to_string());
+            },
+            Message::Clear=>{
+                self.value="".to_string();
+            },
+        }
         
     }
 
@@ -195,12 +199,12 @@ impl Calculator{
                         (3,1) => {
                             Button::new(
                                 Container::new(
-                                    Text::new("N/A")
+                                    Text::new("AC")
                                 )
                             )
                             .width(Length::Fill)
                             .height(Length::Fill)
-                            //.on_press(Message::Input(" ".to_string()))
+                            .on_press(Message::Clear)
                         },
                         (3,2) => {
                             Button::new(
@@ -254,16 +258,7 @@ impl Calculator{
         let shunted = shunter::shunt(tokens);
         return solver::evaluate(shunted);
 
-        //println!("{:?}", output);
-
-
     }
-
-
-
-
-
-
 }
 
 
