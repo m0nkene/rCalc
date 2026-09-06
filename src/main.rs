@@ -191,12 +191,12 @@ impl Calculator{
                         (3,1) => {
                             Button::new(
                                 Container::new(
-                                    Text::new(".")
+                                    Text::new("N/A")
                                 )
                             )
                             .width(Length::Fill)
                             .height(Length::Fill)
-                            .on_press(Message::Input(".".to_string()))
+                            //.on_press(Message::Input(" ".to_string()))
                         },
                         (3,2) => {
                             Button::new(
@@ -247,7 +247,7 @@ impl Calculator{
 
         let input = self.value.clone();
         let tokens = tokenizer::tokenize(&input);
-        shunter::shunt(tokens);
+        //shunter::shunt(tokens);
         
 
         //println!("{:?}", tokens)
