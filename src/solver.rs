@@ -1,47 +1,44 @@
-// use crate::tokenizer::*;
+use crate::tokenizer::*;
+use std::ops::*;
 
-// pub fn evaluate (input: Vec<Token>) -> i64{
+pub fn evaluate (input: Vec<Token>) -> i64{
 
-//     let mut stack = Vec::new();
+    let mut stack: Vec<i64> = Vec::new();
+    let mut output;
 
-//     for i in input{
+    for t in input{
 
+        match t.token_type{
 
-//         match i.token_type{
-//             TokenType::Int => stack.push(i.token_value),
-//             _ => {
-                
-//                 for c in &stack{
-//                     println!("{}", c);
-//                 }
-
-
-//             },
+            //if the token is a number, push to the stack as i64
+            TokenType::Int => stack.push(t.token_value.parse::<i64>().unwrap()),
             
+            
+            TokenType::Add =>{
+                let b = stack.pop().unwrap();
+                let a = stack.pop().unwrap();
+                stack.push(a + b);
+            },
+            TokenType::Sub =>{
+                let b = stack.pop().unwrap();
+                let a = stack.pop().unwrap();
+                stack.push(a - b);
+            },
+            TokenType::Mul =>{
+                let b = stack.pop().unwrap();
+                let a = stack.pop().unwrap();
+                stack.push(a * b);
+            },
+            TokenType::Div =>{
+                let b = stack.pop().unwrap();
+                let a = stack.pop().unwrap();
+                stack.push(a / b);
+            },
 
-//         }
+            _ => continue,
+        }
+    }
 
-
-
-//         // if i.token_type.equals("Int"){
-//         //     stack.push(i.token_value);
-//         //     println!("Here1");
-//         // }else {
-//         //     
-//         // }
-        
-        
-        
-//         // match i.token_type {
-//         //     Token::token_type.value("Int") => stack.push(i),
-//         //     _ => 
-//         //     {
-//         //         let b = stack.pop().unwrap();
-//         //         let a = stack.pop().unwrap();
-//         //         //println!(":?{}{}",a,b)
-//         //     }
-//         // }
-//     }
-
-//     return 0;
-// }
+    output = stack.pop().unwrap();
+    return output.into();
+}
