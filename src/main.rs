@@ -1,4 +1,5 @@
 mod tokenizer;
+mod shunter;
 mod solver;
 
 use iced::widget::{Button, text, Text, Grid, Column, Container, Row, column, container, row};
@@ -246,7 +247,8 @@ impl Calculator{
 
         let input = self.value.clone();
         let tokens = tokenizer::tokenize(&input);
-        solver::evaluate(tokens);
+        shunter::shunt(tokens);
+        
 
         //println!("{:?}", tokens)
 
