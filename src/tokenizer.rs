@@ -50,22 +50,6 @@ pub fn tokenize(input: &str) -> Vec<Token>{
             ' ' => continue,
             _ => continue,
         }
-
-
-
-
-
-
-
-        // match c{
-        //     ' ' => continue,
-        //     '0'..='9' => tokens.push(create_token(TokenType::Int, c.to_string())),
-        //     '+' => tokens.push(create_token(TokenType::Add, c.to_string())),
-        //     '-' => tokens.push(create_token(TokenType::Sub, c.to_string())),
-        //     '*' => tokens.push(create_token(TokenType::Mul, c.to_string())),
-        //     '/' => tokens.push(create_token(TokenType::Div, c.to_string())),
-        //     _ => continue,
-        // }
     }
     
     if !num_buffer.is_empty(){
@@ -74,7 +58,6 @@ pub fn tokenize(input: &str) -> Vec<Token>{
         num_buffer.clear();
     }
     
-    println!("{:?}", tokens);
     return tokens;
 }
 

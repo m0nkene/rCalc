@@ -42,8 +42,12 @@ impl Calculator{
         Message::Input(ValueIn)=>{
             self.value.push_str(&ValueIn);
         },
-        Message::Evaluate=>self.evaluate(),
-        }
+        Message::Evaluate=>{
+            let out = self.evaluate();
+            self.value= (out.to_string());
+        },
+    }
+        
     }
 
     fn view (&self) -> Element<'_, Message> {
@@ -243,14 +247,14 @@ impl Calculator{
 
     }
 
-    fn evaluate(&self){
+    fn evaluate(&self) -> i64{
 
         let input = self.value.clone();
         let tokens = tokenizer::tokenize(&input);
-        //shunter::shunt(tokens);
-        
+        let shunted = shunter::shunt(tokens);
+        return solver::evaluate(shunted);
 
-        //println!("{:?}", tokens)
+        //println!("{:?}", output);
 
 
     }
